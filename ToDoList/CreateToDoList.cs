@@ -120,6 +120,26 @@ namespace ToDoList
         }
 
 
+        public static void ChangeListName()
+        {
+            var json = CreateToDoListFile.GetJson();
+            int index = -1;
+
+            Console.WriteLine("Which list do you want to change list-name on?");
+            foreach(var title in json)
+            {
+                index++;
+                Console.WriteLine(title.ListTitle + "\nPress: " + index + "\n");
+            }
+            int listToChange = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter new list name:");
+            string newListName = Console.ReadLine();
+            json[listToChange].ListTitle = newListName;
+            CreateToDoListFile.UpDate(json);
+            return;
+        }
+
+
 
 
 

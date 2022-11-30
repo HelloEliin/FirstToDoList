@@ -57,7 +57,19 @@ namespace ToDoList
                                 break;
 
                             case "c":
-                                Console.WriteLine("Changing name.");
+                                CreateToDoList.ChangeListName();
+                                break;
+                            case "a":
+                                // Add task
+                                break;
+                            case "m":
+                                // Mark as completed
+                                break;
+                            case "e":
+                                // Edit task
+                                break;
+                            case "d":
+                                // Delete task
                                 break;
                         }
 
