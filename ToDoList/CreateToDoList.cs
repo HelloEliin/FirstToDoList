@@ -13,7 +13,7 @@ namespace ToDoList
 
 
         public string ListTitle { get; set; }  
-        public List<Tasks> Task { get; set; }  
+        public List<Task> Task { get; set; }  
         
         public static void CreateNewToDoList()
         {
@@ -29,13 +29,21 @@ namespace ToDoList
                 
             }
 
+            //console.writeline("what task to add?");
+            //string tasktitle = console.readline();
+
+            //var tasks = new list<task>();
+            //tasks.add(new tasks { tasktitle = tasktitle, completed = false });
 
             var newList = new CreateToDoList()
             {
                 ListTitle = listname,
-                Task = new List<Tasks>()
+                Task = new List<Task>()
 
             };
+
+         
+
 
             json.Add(newList);
             CreateToDoListFile.UpDate(json); 
@@ -89,12 +97,15 @@ namespace ToDoList
 
             deleteKey = Convert.ToInt32(Console.ReadLine());
 
-            if (deleteKey > json.Count || deleteKey < 0)
+            
+
+                if (deleteKey > json.Count || deleteKey < 0)
             {
                 Console.WriteLine("That list dont exist.");
                 return;
             }
 
+  
             Console.WriteLine("Do you want to delete this list? y/n");
             string yesOrNo = Console.ReadLine();
             if(yesOrNo == "y")
@@ -107,6 +118,9 @@ namespace ToDoList
 
 
         }
+
+
+
 
 
 
