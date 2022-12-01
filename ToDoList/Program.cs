@@ -22,8 +22,7 @@ namespace ToDoList
 
             do { 
 
-                Console.WriteLine("\nWhat do you want to do?\n");
-                Console.WriteLine("" +
+                Console.WriteLine("\n\nMY TO DO LISTS \n\n" +
                     "[O]pen recent list\n" +
                     "[V]iew all lists\n" +
                     "[C]reate new list\n" +
@@ -37,15 +36,15 @@ namespace ToDoList
                 {
                     
                     case "o":
-                        // Open recent list
+                        CreateToDoList.RecentList();
                         break;
 
-                   case "v": CreateToDoList.ViewAllList();
-                        Console.WriteLine("What do you want to do?");
-                        Console.WriteLine("" +
+                   case "v":
+                        CreateToDoList.ViewAllList();
+                        Console.WriteLine("\n\n LISTMENU \n" +
                                    "[V]iew list\n" +
-                                   "[R]eturn to menu\n" +
-                                   "[C]hange list-name\n" +
+                                   "[B]ack to startmenu\n" +
+                                   "[R]ename list\n" +
                                    "[A]dd task\n" +
                                    "[M]ark task as complete\n" +
                                    "[E]dit task\n" + 
@@ -55,13 +54,13 @@ namespace ToDoList
 
                         switch (menuTwo)
                         {
-                            case "r":
+                            case "b":
                                 break;
                             case "v":
                                 CreateToDoList.ViewOneList();
                                 break;
 
-                            case "c":
+                            case "r":
                                 CreateToDoList.ChangeListName();
                                 break;
                             case "a":

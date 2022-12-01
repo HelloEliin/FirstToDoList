@@ -14,8 +14,13 @@ namespace ToDoList
                 var json = CreateToDoListFile.GetJson();
                 int index = -1;
 
+            if (json?.Any() != true)
+            {
+                Console.WriteLine("You have no lists.");
+                return;
+            }
 
-                Console.WriteLine("Choose list: ");
+            Console.WriteLine("\n\nChoose list to add tasks to: ");
 
                 foreach (var title in json)
                 {
@@ -55,6 +60,13 @@ namespace ToDoList
         {
             var json = CreateToDoListFile.GetJson();
             int index = -1;
+
+            if (json?.Any() != true)
+            {
+                Console.WriteLine("You have no lists.");
+                return;
+            }
+
             Console.WriteLine("\n Choose list to delete task from: ");
 
             foreach (var title in json)
@@ -99,6 +111,7 @@ namespace ToDoList
             if (json?.Any() != true)
             {
                 Console.WriteLine("You have no lists.");
+                return;
             }
 
             Console.WriteLine("\nChoose a list to change tasks in:\n");
@@ -142,6 +155,7 @@ namespace ToDoList
             if (json?.Any() != true)
             {
                 Console.WriteLine("You have no lists.");
+                return;
             }
 
             Console.WriteLine("\nChoose a list to mark tasks as completed in:\n");
