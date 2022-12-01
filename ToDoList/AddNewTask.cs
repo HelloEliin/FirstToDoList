@@ -51,35 +51,44 @@ namespace ToDoList
 
         }
 
-        //public static void DeleteTask()
-        //{
-        //    var json = CreateToDoListFile.GetJson();
+        public static void DeleteTask()
+        {
+            var json = CreateToDoListFile.GetJson();
+            int index = -1;
+            Console.WriteLine("\n Choose list to delete task from: ");
 
-        //    console.writeline("Choose list to delete task from: ");
+            foreach (var title in json)
+            {
+                index++;
+                Console.WriteLine(title.ListTitle + "\npress: " + index + "\n");
 
-        //    foreach (var title in json)
-        //    {
-        //        index++;
-        //        console.writeline(title.listtitle + "\npress: " + index + "\n");
+            }
 
-        //    }
+            int choosenList = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Select index of the task you want to remove: ");
 
-        //    int choosenList = convert.toint32(console.readline());
-        //    Console.WriteLine("Select index of the task you want to remove: ");
-        //    int indexToRemove = Convert.ToInt32(Console.WriteLine());
-        //    Console.WriteLine("Do you want to delete this task? y/n");
-        //    string yesOrNo = Console.ReadLine();
+            int order = -1;
+            foreach (var task in json[choosenList].Task)
+            {
 
-        //    if (yesOrNo == "y")
-        //    {
-        //        json.RemoveAt(indexToRemove)
-        //        CreateToDoListFile.UpDate(json);
-        //    }
+                order++;
+                Console.WriteLine(order + "  " + task.TaskTitle);
+            }
 
-        //    return;
+            int toRemove = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Do you want to delete this task? y/n");
+            string yesOrNo = Console.ReadLine();
 
+            if (yesOrNo == "y")
+            {
 
-        //}
+                json[choosenList].Task.RemoveAt(toRemove);
+                CreateToDoListFile.UpDate(json);
+            }
+
+            return;
+
+        }
 
 
         public static void ChangeTaskName()
@@ -129,7 +138,6 @@ namespace ToDoList
         {
             var json = CreateToDoListFile.GetJson();
             int index = -1;
-            bool toggleComplete;
 
             if (json?.Any() != true)
             {

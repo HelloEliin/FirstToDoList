@@ -30,12 +30,6 @@ namespace ToDoList
                 
             }
 
-            //console.writeline("what task to add?");
-            //string tasktitle = console.readline();
-
-            //var tasks = new list<task>();
-            //tasks.add(new tasks { tasktitle = tasktitle, completed = false });
-
             var newList = new CreateToDoList()
             {
                 ListTitle = listname,
@@ -44,8 +38,6 @@ namespace ToDoList
             };
 
          
-
-
             json.Add(newList);
             CreateToDoListFile.UpDate(json); 
 
@@ -98,7 +90,6 @@ namespace ToDoList
 
             deleteKey = Convert.ToInt32(Console.ReadLine());
 
-            
 
                 if (deleteKey > json.Count || deleteKey < 0)
             {
@@ -165,12 +156,29 @@ namespace ToDoList
             Console.WriteLine("   TASKS   \n");
             int order = -1;
 
+
                 foreach (var task in json[choosenList].Task)
                 {
 
-                    order++;
-                    Console.WriteLine(order + "  " + task.TaskTitle);
+                
+
+                if (task.Completed == true)
+                {
+                   
+                    Console.ForegroundColor = ConsoleColor.Green;
                 }
+
+                if(task.Completed == false)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+
+                order++;
+                Console.WriteLine(order + "  " + task.TaskTitle);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+            
      
                
 

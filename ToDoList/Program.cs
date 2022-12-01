@@ -16,10 +16,11 @@ namespace ToDoList
           json.CreateFile();
           string menuChoice;
           bool isRunning = true;
-            string menuTwo;
+          string menuTwo;
 
 
-        do { 
+
+            do { 
 
                 Console.WriteLine("\nWhat do you want to do?\n");
                 Console.WriteLine("" +
@@ -73,7 +74,7 @@ namespace ToDoList
                                 AddNewTask.ChangeTaskName();
                                 break;
                             case "d":
-                                // Delete task
+                                AddNewTask.DeleteTask();
                                 break;
                             default:
                                 Console.WriteLine("Try again.");
