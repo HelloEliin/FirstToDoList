@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 namespace ToDoList
@@ -64,7 +65,7 @@ namespace ToDoList
 
             foreach (var title in json)
             {
-                Console.WriteLine("All your lists:\n" + title.ListTitle +"\n");
+                Console.WriteLine("\nAll your lists:\n" + title.ListTitle +"\n");
                 
             }
 
@@ -125,7 +126,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int index = -1;
 
-            Console.WriteLine("Which list do you want to change list-name on?");
+            Console.WriteLine("\nWhich list do you want to change list-name on?\n");
             foreach(var title in json)
             {
                 index++;
@@ -141,6 +142,40 @@ namespace ToDoList
 
 
 
+        public static void ViewOneList()
+        {
+            var json = CreateToDoListFile.GetJson();
+            int index = -1;
+
+            if (json?.Any() != true)
+            {
+                Console.WriteLine("You have no lists.");
+            }
+
+            Console.WriteLine("\nChoose a list to look at:\n");
+
+            foreach (var title in json)
+            {
+                index++;
+                Console.WriteLine("   LISTNAME   \n" + title.ListTitle + "\nPress: " + index + "\n");
+
+            }
+
+            int choosenList = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("   TASKS   \n");
+            int order = -1;
+
+                foreach (var task in json[choosenList].Task)
+                {
+
+                    order++;
+                    Console.WriteLine(order + "  " + task.TaskTitle);
+                }
+     
+               
+
+
+        }
 
 
 
@@ -151,5 +186,6 @@ namespace ToDoList
 
 
 
-    }
+
+}
 }
