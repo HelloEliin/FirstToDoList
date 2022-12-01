@@ -6,7 +6,7 @@ namespace ToDoList
         public  string TaskTitle { get; set; }
         //public string taskdescription { get; set; }
         public bool Completed;
-        //public Tasks(string task, bool completed)
+        //public Task (string task, bool completed)
         //{
         //    TaskTitle = task;
         //    Completed = completed;

@@ -60,7 +60,7 @@ namespace ToDoList
                                 CreateToDoList.ChangeListName();
                                 break;
                             case "a":
-                                // Add task
+                                AddNewTask.AddTask();
                                 break;
                             case "m":
                                 // Mark as completed
@@ -70,6 +70,9 @@ namespace ToDoList
                                 break;
                             case "d":
                                 // Delete task
+                                break;
+                            default:
+                                Console.WriteLine("Try again.");
                                 break;
                         }
 
