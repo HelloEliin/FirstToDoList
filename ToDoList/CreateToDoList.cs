@@ -20,7 +20,7 @@ namespace ToDoList
         {
             var json = CreateToDoListFile.GetJson();
 
-            Console.WriteLine("Name of list: ");
+            Console.WriteLine("ENTER NAME OF LIST");
             var listname = Console.ReadLine();
 
             if (String.IsNullOrEmpty(listname))
@@ -49,20 +49,8 @@ namespace ToDoList
         public static void ViewAllList()
         {
             var json = CreateToDoListFile.GetJson();
-
-            if (json?.Any() != true)
-            {
-                Console.WriteLine("You have no lists.");
-                return;
-            }
-
             Console.WriteLine("\n\nALL OF YOUR LISTS\n");
-            foreach (var title in json)
-            {
-                Console.WriteLine(title.ListTitle);
-                
-            }
-
+            EveryListTitleInJson();
             return;
 
         }
@@ -70,45 +58,36 @@ namespace ToDoList
 
         public static void DeleteList()
         {
+
             var json = CreateToDoListFile.GetJson();
-            int deleteKey;
-            int index = -1;
-
-
-
-            if (json?.Any() != true)
-            {
-                Console.WriteLine("You have no lists to delete.");
-                return;
-            }
+            int num = 0;
 
             Console.WriteLine("\n SELECT LIST TO DELETE \n");
+            EveryListTitleInJson();
+            string choosenList = Console.ReadLine();
+            bool isValid = Validation.IsThereValidNumber(choosenList);
 
-            foreach (var title in json)
+            if (isValid == false)
             {
-                index++;
-                Console.WriteLine(title.ListTitle + "\nPress: " + index + "\n");
-    
-            }
-            
-            
-            deleteKey = Convert.ToInt32(Console.ReadLine());
-
-
-                if (deleteKey > json.Count || deleteKey < 0)
-            {
-                Console.WriteLine("That list dont exist.");
                 return;
             }
 
-  
             Console.WriteLine("\nDo you want to delete this list? y/n");
             string yesOrNo = Console.ReadLine();
             if(yesOrNo == "y")
             {
-                json.RemoveAt(deleteKey);
+                json.RemoveAt(num);
                 CreateToDoListFile.UpDate(json);
             }
+            else if(yesOrNo == "n")
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Only 'y' or 'n'.");
+            }
+            
 
             return;
 
@@ -121,18 +100,10 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int index = -1;
 
-            if (json?.Any() != true)
-            {
-                Console.WriteLine("You have no lists.");
-                return;
-            }
-
             Console.WriteLine("\n SELECT LIST TO RENAME \n");
-            foreach(var title in json)
-            {
-                index++;
-                Console.WriteLine(title.ListTitle + "\nPress: " + index + "\n");
-            }
+
+            EveryListTitleInJson();
+
             int listToChange = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter new list name:");
             string newListName = Console.ReadLine();
@@ -146,45 +117,37 @@ namespace ToDoList
         public static void ViewOneList()
         {
             var json = CreateToDoListFile.GetJson();
-            int index = -1;
+            Console.WriteLine("\nSELECT LIST TO VIEW \n");
+            EveryListTitleInJson();
 
-            if (json?.Any() != true)
+            string choosenList = Console.ReadLine();
+            bool isValid = Validation.IsThereValidNumber(choosenList);
+
+            if(isValid == false)
             {
-                Console.WriteLine("You have no lists.");
                 return;
             }
 
-            Console.WriteLine("\n SELECT LIST TO VIEW \n");
+            int num = Convert.ToInt32(choosenList);
 
-            foreach (var title in json)
+            Console.WriteLine(json[num].ListTitle);
+
+            foreach (var task in json[num].Task)
             {
-                index++;
-                Console.WriteLine("   LISTNAME   \n" + title.ListTitle + "\nPress: " + index + "\n");
-
-            }
-
-            int choosenList = Convert.ToInt32(Console.ReadLine());
-            int order = -1;
-            Console.WriteLine(json[choosenList].ListTitle);
-
-                foreach (var task in json[choosenList].Task)
-                {
 
                 if (task.Completed == true)
                 {
-                   
+
                     Console.ForegroundColor = ConsoleColor.Green;
                 }
 
-                if(task.Completed == false)
+                if (task.Completed == false)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
-
-                order++;
-                Console.WriteLine(order + "  " + task.TaskTitle);
+                Console.WriteLine(task.TaskTitle);
                 Console.ForegroundColor = ConsoleColor.White;
-                }    
+            }
 
 
         }
@@ -193,7 +156,6 @@ namespace ToDoList
         public static void RecentList()
         {
             var json = CreateToDoListFile.GetJson();
-            int order = -1;
             json.Reverse();
             Console.WriteLine("\n\n\n" + json[0].ListTitle);
 
@@ -211,11 +173,24 @@ namespace ToDoList
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
 
-                order++;
-                Console.WriteLine(order + "  " + task.TaskTitle);
+                Console.WriteLine(task.TaskTitle);
                 Console.ForegroundColor = ConsoleColor.White;
             }
 
+            return;
+
+        }
+
+
+        public static void EveryListTitleInJson()
+        {
+            var json = CreateToDoListFile.GetJson();
+            int index = -1;
+            foreach (var title in json)
+            {
+                index++;
+                Console.WriteLine(title.ListTitle + "\nPress: " + index + "\n");
+            }
         }
 
 

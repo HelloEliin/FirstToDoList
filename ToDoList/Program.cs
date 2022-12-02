@@ -2,7 +2,6 @@
 
 namespace ToDoList
 {
-
     internal partial class Program
     {
 
@@ -20,64 +19,36 @@ namespace ToDoList
 
 
 
-            do { 
+            do {
 
-                Console.WriteLine("\n\nMY TO DO LISTS \n\n" +
-                    "[O]pen recent list\n" +
-                    "[V]iew all lists\n" +
-                    "[C]reate new list\n" +
-                    "[D]elete list\n" +
-                    "[Q]uit");
-
-
+                Menu.StartMenu(); 
                 menuChoice = Console.ReadLine().ToLower();
 
                 switch (menuChoice)
                 {
+
                     
                     case "o":
-                        CreateToDoList.RecentList();
+                        bool isThereAnyLists = Validation.IsThereAnyLists();
+                        if (isThereAnyLists == true)
+                        {
+                            CreateToDoList.RecentList();
+                            Menu.ListMenu();
+                            string listMenuChoice = Console.ReadLine().ToLower();
+                            Menu.ListMenuChoices(listMenuChoice);
+
+                        }
                         break;
 
-                   case "v":
-                        CreateToDoList.ViewAllList();
-                        Console.WriteLine("\n\n LISTMENU \n" +
-                                   "[V]iew list\n" +
-                                   "[B]ack to startmenu\n" +
-                                   "[R]ename list\n" +
-                                   "[A]dd task\n" +
-                                   "[M]ark task as complete\n" +
-                                   "[E]dit task\n" + 
-                                   "[D]elete task");
+                    case "v":
 
-                        menuTwo = Console.ReadLine().ToLower();
-
-                        switch (menuTwo)
+                        isThereAnyLists = Validation.IsThereAnyLists();
+                        if (isThereAnyLists == true)
                         {
-                            case "b":
-                                break;
-                            case "v":
-                                CreateToDoList.ViewOneList();
-                                break;
-
-                            case "r":
-                                CreateToDoList.ChangeListName();
-                                break;
-                            case "a":
-                                AddNewTask.AddTask();
-                                break;
-                            case "m":
-                                AddNewTask.isCompleted();
-                                break;
-                            case "e":
-                                AddNewTask.ChangeTaskName();
-                                break;
-                            case "d":
-                                AddNewTask.DeleteTask();
-                                break;
-                            default:
-                                Console.WriteLine("Try again.");
-                                break;
+                            CreateToDoList.ViewAllList();
+                            Menu.ListMenu();
+                            string listMenuChoice = Console.ReadLine().ToLower();
+                            Menu.ListMenuChoices(listMenuChoice);
                         }
 
                         break;
@@ -85,7 +56,13 @@ namespace ToDoList
                    case "c": CreateToDoList.CreateNewToDoList();
                         break;
 
-                   case "d": CreateToDoList.DeleteList();
+                   case "d":
+
+                        isThereAnyLists = Validation.IsThereAnyLists();
+                        if (isThereAnyLists == true)
+                        {
+                            CreateToDoList.DeleteList();
+                        }
                         break;
 
                     case "q":
