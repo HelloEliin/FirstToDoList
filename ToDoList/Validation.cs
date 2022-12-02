@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace ToDoList
 {
@@ -40,6 +41,19 @@ namespace ToDoList
 
             }
 
+
+            return true;
+        }
+
+
+        public static bool IsThereAnyTasks(int choosenList)
+        {
+            var json = CreateToDoListFile.GetJson();
+            if (json[choosenList].Task.Count == 0)
+            {
+                Console.WriteLine("You have no to-do's in this list.");
+                return false;
+            }
 
             return true;
         }

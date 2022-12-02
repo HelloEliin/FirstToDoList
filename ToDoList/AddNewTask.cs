@@ -7,29 +7,21 @@ namespace ToDoList
     {
 
 
-        
+
         public static void AddTask()
         {
-                bool isAdding = true;
-                var json = CreateToDoListFile.GetJson();
-                int index = -1;
+            bool isAdding = true;
+            var json = CreateToDoListFile.GetJson();
 
             Console.WriteLine("\n\nSELECT LIST TO ADD TO-DO'S TO");
+            CreateToDoList.EveryListTitleInJson();
+            string choosenList = Console.ReadLine();
+            bool validOrNot = Validation.IsThereValidNumber(choosenList);
 
-                foreach (var title in json)
-                {
-                    index++;
-                    Console.WriteLine(title.ListTitle + "\nPress: " + index + "\n");
-
-                }
-
-                string choosenList = Console.ReadLine();
-                bool validOrNot = Validation.IsThereValidNumber(choosenList);
-
-                if(validOrNot == false)
-                {
-                   return;
-                }
+            if (validOrNot == false)
+            {
+                return;
+            }
 
 
             while (isAdding)
@@ -41,60 +33,66 @@ namespace ToDoList
                     isAdding = false;
                     return;
                 }
-                
 
                 var task = new Task()
-                { 
-                    TaskTitle = taskToAdd, 
-                    Completed = false 
+                {
+                    TaskTitle = taskToAdd,
+                    Completed = false
                 };
 
                 int num = Convert.ToInt32(choosenList);
                 json[num].Task.Add(task);
                 CreateToDoListFile.UpDate(json);
-              
+
             }
-            
-                
+
+
 
         }
 
         public static void DeleteTask()
         {
             var json = CreateToDoListFile.GetJson();
-            int index = -1;
-
             Console.WriteLine("\n\nSELECT LIST TO DELETE TO-DO FROM ");
+            CreateToDoList.EveryListTitleInJson();
+            string choosenList = Console.ReadLine();
 
-            foreach (var title in json)
+            bool isValid = Validation.IsThereValidNumber(choosenList);
+            if (isValid == false)
             {
-                index++;
-                Console.WriteLine(title.ListTitle + "\npress: " + index + "\n");
-
+                return;
             }
 
-            int choosenList = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Select index of the task you want to remove: ");
+            int whatList = Convert.ToInt32(choosenList);
 
-            int order = -1;
-            foreach (var task in json[choosenList].Task)
+            bool isTasks = Validation.IsThereAnyTasks(whatList);
+            if (isTasks == false)
             {
-
-                order++;
-                Console.WriteLine(order + "  " + task.TaskTitle);
+                return;
             }
 
-            int toRemove = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("SELECT TO-DO TO DELETE ");
+            EveryTaskInList(whatList);
+            string index = Console.ReadLine();
+            bool isValidOrNot = Validation.IsThereValidNumber(index);
+            if (isValidOrNot == false)
+            {
+                return;
+            }
+            int indexToRemove = Convert.ToInt32(index);
+
+
             Console.WriteLine("Do you want to delete this to-do? y/n");
             string yesOrNo = Console.ReadLine();
 
             if (yesOrNo == "y")
             {
 
-                json[choosenList].Task.RemoveAt(toRemove);
+                json[whatList].Task.RemoveAt(indexToRemove);
                 CreateToDoListFile.UpDate(json);
             }
 
+            Console.WriteLine("Only 'y' or 'n'.");
             return;
 
         }
@@ -103,33 +101,40 @@ namespace ToDoList
         public static void ChangeTaskName()
         {
             var json = CreateToDoListFile.GetJson();
-            int index = -1;
-
             Console.WriteLine("\nSELECT LIST TO EDIT TO-DO IN:\n");
+            CreateToDoList.EveryListTitleInJson();
+            string choosenList = Console.ReadLine();
 
-            foreach (var title in json)
+            bool isValid = Validation.IsThereValidNumber(choosenList);
+            if (isValid == false)
             {
-                index++;
-                Console.WriteLine("LISTNAME\n" + title.ListTitle + "\nPress: " + index + "\n");
-
+                return;
             }
 
-            int choosenList = Convert.ToInt32(Console.ReadLine());
+            int whatList = Convert.ToInt32(choosenList);
+
+            bool isTasks = Validation.IsThereAnyTasks(whatList);
+            if (isTasks == false)
+            {
+                return;
+            }
+
 
             Console.WriteLine("\nSELECT TO-DO TO RENAME\n");
-            int order = -1;
-            foreach (var task in json[choosenList].Task)
+            EveryTaskInList(whatList);
+            string taskToChange = Console.ReadLine();
+            bool isNumber = Validation.IsThereValidNumber(taskToChange);
+            if (isNumber == false)
             {
-
-                order++;
-                Console.WriteLine(order + "  " + task.TaskTitle);
+                return;
             }
+            int whatTask = Convert.ToInt32(taskToChange);
 
-            int taskToChange = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("ENTER NEW TO-DO NAME:");
             string newTaskName = Console.ReadLine();
 
-            json[choosenList].Task[taskToChange].TaskTitle = newTaskName;
+            json[whatList].Task[whatTask].TaskTitle = newTaskName;
+
             CreateToDoListFile.UpDate(json);
             return;
 
@@ -141,27 +146,13 @@ namespace ToDoList
         public static void isCompleted()
         {
             var json = CreateToDoListFile.GetJson();
-            int index = -1;
-
-            Console.WriteLine("\nChoose a list to mark tasks as completed in:\n");
-
-            foreach (var title in json)
-            {
-                index++;
-                Console.WriteLine("   LISTNAME   \n" + title.ListTitle + "\nPress: " + index + "\n");
-
-            }
+            Console.WriteLine("\nSELECT LIST TO MARK COMPLETED TO-DO'S\n");
+            CreateToDoList.EveryListTitleInJson();
 
             int choosenList = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("\nWhich task do you want to mark as complete?\n");
-            int order = -1;
-            foreach (var task in json[choosenList].Task)
-            {
+            Console.WriteLine("\nSelect to-do:\n");
 
-                order++;
-                Console.WriteLine(order + "  " + task.TaskTitle);
-            }
 
             int taskToChange = Convert.ToInt32(Console.ReadLine());
 
@@ -171,6 +162,19 @@ namespace ToDoList
 
 
 
+        }
+
+
+        public static void EveryTaskInList(int list)
+        {
+            var json = CreateToDoListFile.GetJson();
+            int index = -1;
+            foreach (var task in json[list].Task)
+            {
+
+                index++;
+                Console.WriteLine(index + "  " + task.TaskTitle);
+            }
         }
 
     }

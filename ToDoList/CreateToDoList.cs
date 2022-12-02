@@ -65,21 +65,16 @@ namespace ToDoList
             Console.WriteLine("\n SELECT LIST TO DELETE \n");
             EveryListTitleInJson();
             string choosenList = Console.ReadLine();
-            bool isValid = Validation.IsThereValidNumber(choosenList);
-
-            if (isValid == false)
-            {
-                return;
-            }
+            Validation.IsThereValidNumber(choosenList);
 
             Console.WriteLine("\nDo you want to delete this list? y/n");
             string yesOrNo = Console.ReadLine();
-            if(yesOrNo == "y")
+            if (yesOrNo == "y")
             {
                 json.RemoveAt(num);
                 CreateToDoListFile.UpDate(json);
             }
-            else if(yesOrNo == "n")
+            else if (yesOrNo == "n")
             {
                 return;
             }
@@ -87,7 +82,7 @@ namespace ToDoList
             {
                 Console.WriteLine("Only 'y' or 'n'.");
             }
-            
+
 
             return;
 
@@ -121,12 +116,8 @@ namespace ToDoList
             EveryListTitleInJson();
 
             string choosenList = Console.ReadLine();
-            bool isValid = Validation.IsThereValidNumber(choosenList);
+            Validation.IsThereValidNumber(choosenList);
 
-            if(isValid == false)
-            {
-                return;
-            }
 
             int num = Convert.ToInt32(choosenList);
 
