@@ -13,44 +13,45 @@ namespace ToDoList
     {
 
 
-        public string ListTitle { get; set; }  
-        public List<Task> Task { get; set; }  
-        
+        public string ListTitle { get; set; }
+        public List<Task> Task { get; set; }
+
         public static void CreateNewToDoList()
         {
             var json = CreateToDoListFile.GetJson();
-
             Console.WriteLine("ENTER NAME OF LIST");
-            var listname = Console.ReadLine();
-
-            if (String.IsNullOrEmpty(listname))
+            var listName = Console.ReadLine().ToUpper();
+            if (String.IsNullOrEmpty(listName))
             {
                 Console.WriteLine("You have to put a name on your list.");
-                CreateNewToDoList();
-                
+                return;
             }
 
             var newList = new CreateToDoList()
             {
-                ListTitle = listname,
+                ListTitle = listName,
                 Task = new List<Task>()
 
             };
 
-         
             json.Add(newList);
-            CreateToDoListFile.UpDate(json); 
+            CreateToDoListFile.UpDate(json);
 
             return;
-      
         }
 
 
         public static void ViewAllList()
         {
             var json = CreateToDoListFile.GetJson();
+            Validation.IsThereAnyLists();
+            int index = -1;
             Console.WriteLine("\n\nALL OF YOUR LISTS\n");
-            EveryListTitleInJson();
+            foreach (var title in json)
+            {
+                index++;
+                Console.WriteLine("[" + index +"] " + title.ListTitle + "\n");
+            }
             return;
 
         }
@@ -64,8 +65,20 @@ namespace ToDoList
 
             Console.WriteLine("\n SELECT LIST TO DELETE \n");
             EveryListTitleInJson();
-            string choosenList = Console.ReadLine();
-            Validation.IsThereValidNumber(choosenList);
+            var choosenList = Console.ReadLine();
+            
+            bool valid = int.TryParse(choosenList, out num);    
+            if (!valid)
+            {
+                Console.WriteLine("You have to choose a number.");
+                return;
+            }
+
+            bool listExists = Validation.IsThereValidList(num);
+            if (!listExists)
+            {
+                return;
+            }
 
             Console.WriteLine("\nDo you want to delete this list? y/n");
             string yesOrNo = Console.ReadLine();
@@ -83,9 +96,7 @@ namespace ToDoList
                 Console.WriteLine("Only 'y' or 'n'.");
             }
 
-
             return;
-
 
         }
 
@@ -93,16 +104,35 @@ namespace ToDoList
         public static void ChangeListName()
         {
             var json = CreateToDoListFile.GetJson();
-            int index = -1;
+            int num = 0;
 
             Console.WriteLine("\n SELECT LIST TO RENAME \n");
-
             EveryListTitleInJson();
 
-            int listToChange = Convert.ToInt32(Console.ReadLine());
+            var choosenList = Console.ReadLine();
+            bool valid = int.TryParse(choosenList, out num);
+            if (!valid)
+            {
+                Console.WriteLine("You have to choose a number.");
+                return;
+            }
+            bool validOrNot = Validation.IsThereValidList(num);
+
+            if (!validOrNot)
+            {
+                return;
+            }
+
             Console.WriteLine("Enter new list name:");
-            string newListName = Console.ReadLine();
-            json[listToChange].ListTitle = newListName;
+            string newListName = Console.ReadLine().ToUpper();
+   
+            if (String.IsNullOrEmpty(newListName))
+            {
+                Console.WriteLine("You have to put a name on your list.");
+                return;
+            }
+
+            json[num].ListTitle = newListName;
             CreateToDoListFile.UpDate(json);
             return;
         }
@@ -114,31 +144,18 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             Console.WriteLine("\nSELECT LIST TO VIEW \n");
             EveryListTitleInJson();
-
-            string choosenList = Console.ReadLine();
-            Validation.IsThereValidNumber(choosenList);
-
-
-            int num = Convert.ToInt32(choosenList);
-
-            Console.WriteLine(json[num].ListTitle);
-
-            foreach (var task in json[num].Task)
+            var choosenList = Console.ReadLine();
+            int num = 0;
+            bool valid = int.TryParse(choosenList, out num);
+            if (!valid)
             {
-
-                if (task.Completed == true)
-                {
-
-                    Console.ForegroundColor = ConsoleColor.Green;
-                }
-
-                if (task.Completed == false)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                }
-                Console.WriteLine(task.TaskTitle);
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("You have to choose a number.");
+                return;
             }
+            Validation.IsThereValidList(num);
+            Console.WriteLine(json[num].ListTitle);
+            Validation.IsThereAnyTasks(num);
+            AddNewTask.EveryTaskInList(num);
 
 
         }
@@ -147,7 +164,10 @@ namespace ToDoList
         public static void RecentList()
         {
             var json = CreateToDoListFile.GetJson();
+
+            Validation.IsThereAnyLists();
             json.Reverse();
+            
             Console.WriteLine("\n\n\n" + json[0].ListTitle);
 
             foreach (var task in json[0].Task)
@@ -180,7 +200,7 @@ namespace ToDoList
             foreach (var title in json)
             {
                 index++;
-                Console.WriteLine(title.ListTitle + "\nPress: " + index + "\n");
+                Console.WriteLine(title.ListTitle + "\nPress: " + "[" + index + "]" + "\n");
             }
         }
 
