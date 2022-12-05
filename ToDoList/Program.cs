@@ -9,14 +9,11 @@ namespace ToDoList
         {
             
 
-
-
           var json = new CreateToDoListFile();
           json.CreateFile();
           string menuChoice;
           bool isRunning = true;
           string menuTwo;
-
 
 
             do {
@@ -34,9 +31,6 @@ namespace ToDoList
                         {
                             CreateToDoList.RecentList();
                             Menu.ListMenu();
-                            string listMenuChoice = Console.ReadLine().ToLower();
-                            Menu.ListMenuChoices(listMenuChoice);
-
                         }
                         break;
 
@@ -46,9 +40,7 @@ namespace ToDoList
                         if (isThereAnyLists == true)
                         {
                             CreateToDoList.ViewAllList();
-                            Menu.ListMenu();
-                            string listMenuChoice = Console.ReadLine().ToLower();
-                            Menu.ListMenuChoices(listMenuChoice);
+                            Menu.ListMenu();    
                         }
 
                         break;

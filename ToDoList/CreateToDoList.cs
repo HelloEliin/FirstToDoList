@@ -19,7 +19,7 @@ namespace ToDoList
         public static void CreateNewToDoList()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("ENTER NAME OF LIST");
+            Console.WriteLine("\n\nENTER NAME OF LIST\n");
             var listName = Console.ReadLine().ToUpper();
             if (String.IsNullOrEmpty(listName))
             {
@@ -46,7 +46,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             Validation.IsThereAnyLists();
             int index = -1;
-            Console.WriteLine("\n\nALL OF YOUR LISTS\n");
+            Console.WriteLine("\n\n\nALL OF YOUR LISTS\n");
             foreach (var title in json)
             {
                 index++;
@@ -63,7 +63,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int num = 0;
 
-            Console.WriteLine("\n SELECT LIST TO DELETE \n");
+            Console.WriteLine("\nSELECT LIST TO DELETE \n");
             EveryListTitleInJson();
             var choosenList = Console.ReadLine();
             
@@ -123,7 +123,7 @@ namespace ToDoList
                 return;
             }
 
-            Console.WriteLine("Enter new list name:");
+            Console.WriteLine("ENTER NEW LISTNAME:");
             string newListName = Console.ReadLine().ToUpper();
    
             if (String.IsNullOrEmpty(newListName))
@@ -152,7 +152,12 @@ namespace ToDoList
                 Console.WriteLine("You have to choose a number.");
                 return;
             }
-            Validation.IsThereValidList(num);
+            bool validOrNot = Validation.IsThereValidList(num);
+            if (!validOrNot)
+            {
+                return;
+            
+            }
             Console.WriteLine(json[num].ListTitle);
             Validation.IsThereAnyTasks(num);
             AddNewTask.EveryTaskInList(num);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace ToDoList
@@ -50,6 +51,20 @@ namespace ToDoList
             }
 
             return true;
+        }
+
+
+        public static bool IsThereValidTask(int task, int choosenList)
+        {
+            var json = CreateToDoListFile.GetJson();
+            if (json[choosenList].Task.Count < task || json[choosenList].Task.Count < 0)
+            {
+                Console.WriteLine("That to-do dont exist.");
+                return false;
+            }
+
+            return true;
+
         }
 
 

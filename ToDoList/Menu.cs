@@ -7,7 +7,7 @@
         {
             Console.WriteLine("\n\nMY TO DO LISTS \n\n" +
             "[O]pen recent list\n" +
-            "[V]iew all lists\n" +
+            "[V]iew lists and listmenu\n" +
             "[C]reate new list\n" +
             "[D]elete list\n" +
             "[Q]uit");
@@ -15,21 +15,22 @@
 
 
 
+
+
         public static void ListMenu()
         {
-            Console.WriteLine("\n\n LISTMENU \n" +
-           "[V]iew list\n" +
-           "[B]ack to startmenu\n" +
-           "[R]ename list\n" +
-           "[A]dd task\n" +
-           "[M]ark task as complete\n" +
-           "[E]dit task\n" +
-           "[D]elete task");
-        }
 
+            Console.WriteLine("\n\n\nLISTMENU\n" +
+     "[V]iew lists\n" +
+     "[B]ack to startmenu\n" +
+     "[R]ename list\n" +
+     "[A]dd task\n" +
+     "[M]ark task as complete\n" +
+     "[T]o do menu\n" +
+     "[D]elete task");
 
-        public static void ListMenuChoices(string choice)
-        {
+            string choice = Console.ReadLine();
+
             switch (choice)
             {
                 case "b":
@@ -47,8 +48,8 @@
                 case "m":
                     AddNewTask.isCompleted();
                     break;
-                case "e":
-                    AddNewTask.ChangeTaskName();
+                case "t":
+                    TaskMenu();
                     break;
                 case "d":
                     AddNewTask.DeleteTask();
@@ -57,6 +58,34 @@
                     Console.WriteLine("Try again.");
                     break;
             }
+        }
+
+
+
+        public static void TaskMenu()
+        {
+            Console.WriteLine("\n\n\nTO-DO MENU\n" +
+           "[R]ename to-do\n" +
+           "[D]elete to-to\n" +
+           "[B]ack to list menu\n");
+
+            var choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "r":
+                    AddNewTask.ChangeTaskName();
+                    break;
+                case "d":
+                    AddNewTask.DeleteTask();
+                    break;
+                case "b":
+                    break;
+                default:
+                    Console.WriteLine("Try again.");
+                    break;
+            }
+
         }
 
 
