@@ -84,6 +84,7 @@ namespace ToDoList
             string yesOrNo = Console.ReadLine();
             if (yesOrNo == "y")
             {
+                Console.WriteLine("LIST DELETED.");
                 json.RemoveAt(num);
                 CreateToDoListFile.UpDate(json);
             }

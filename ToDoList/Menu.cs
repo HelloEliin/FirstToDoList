@@ -24,10 +24,10 @@
      "[V]iew lists\n" +
      "[B]ack to startmenu\n" +
      "[R]ename list\n" +
-     "[A]dd task\n" +
+     "[A]dd to-do\n" +
      "[M]ark task as complete\n" +
      "[T]o do menu\n" +
-     "[D]elete task");
+     "[D]elete to-do");
 
             string choice = Console.ReadLine();
 
