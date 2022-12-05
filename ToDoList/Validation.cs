@@ -68,6 +68,22 @@ namespace ToDoList
         }
 
 
+        public static bool IsAllComplete(int num)
+        {
+            var json = CreateToDoListFile.GetJson();
+
+            bool allCompleted = json[num].Task.All(x => x.Completed == true);
+            if (allCompleted)
+            {
+                Console.WriteLine("You're a star baby!\nAll to-do's are completed in this list!");
+                AddNewTask.EveryTaskInList(num);
+                return true;
+            }
+
+            return false;
+        }
+
+
 
     }
 }

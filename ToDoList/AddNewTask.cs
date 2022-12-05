@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -233,6 +234,13 @@ namespace ToDoList
             {
                 return;
             }
+
+
+            bool isAllCompleted = Validation.IsAllComplete(num);
+            if(isAllCompleted){
+                return;
+            }
+
             bool isCompleted = true;
             while (isCompleted)
             {
@@ -264,6 +272,11 @@ namespace ToDoList
                 Console.WriteLine("\n\n\nHurray!");
 
 
+                bool isItComplete = Validation.IsAllComplete(num);
+                if (isItComplete)
+                {
+                    return;
+                }
 
             }
 

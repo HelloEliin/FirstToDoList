@@ -173,12 +173,17 @@ namespace ToDoList
 
             Validation.IsThereAnyLists();
             json.Reverse();
-            
+
             Console.WriteLine("\n\n\n" + json[0].ListTitle);
+
+            if (json[0].Task.Count == 0)
+            {
+                Console.WriteLine("Ooops.. empty! No to-do's here!");
+            }
 
             foreach (var task in json[0].Task)
             {
-
+               
                 if (task.Completed == true)
                 {
 
