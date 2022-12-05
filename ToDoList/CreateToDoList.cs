@@ -63,7 +63,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int num = 0;
 
-            Console.WriteLine("\nSELECT LIST TO DELETE \n");
+            Console.WriteLine("\n\n\nSELECT LIST TO DELETE \n");
             EveryListTitleInJson();
             var choosenList = Console.ReadLine();
             
@@ -107,7 +107,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int num = 0;
 
-            Console.WriteLine("\n SELECT LIST TO RENAME \n");
+            Console.WriteLine("\n\n\nSELECT LIST TO RENAME \n");
             EveryListTitleInJson();
 
             var choosenList = Console.ReadLine();
@@ -143,7 +143,7 @@ namespace ToDoList
         public static void ViewOneList()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\nSELECT LIST TO VIEW \n");
+            Console.WriteLine("\n\n\nSELECT LIST TO VIEW\n");
             EveryListTitleInJson();
             var choosenList = Console.ReadLine();
             int num = 0;

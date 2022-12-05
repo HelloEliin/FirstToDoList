@@ -15,7 +15,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int num = 0;
 
-            Console.WriteLine("\n\nSELECT LIST TO ADD TO-DO'S TO\n");
+            Console.WriteLine("\n\n\nSELECT LIST TO ADD TO-DO'S TO\n");
             CreateToDoList.EveryListTitleInJson();
             var choosenList = Console.ReadLine();
             bool valid = int.TryParse(choosenList, out num);
@@ -24,7 +24,6 @@ namespace ToDoList
                 Console.WriteLine("You have to choose a number.");
                 return;
             }
-
 
             while (isAdding)
             {
@@ -48,8 +47,6 @@ namespace ToDoList
 
             }
 
-
-
         }
 
 
@@ -57,8 +54,7 @@ namespace ToDoList
         public static void DeleteTask()
         {
             var json = CreateToDoListFile.GetJson();
-            bool isDeleting = true;
-            Console.WriteLine("\n\nSELECT LIST TO DELETE TO-DO FROM ");
+            Console.WriteLine("\n\n\nSELECT LIST TO DELETE TO-DO FROM ");
             CreateToDoList.EveryListTitleInJson();
             var choosenList = Console.ReadLine();
             int num = 0;
@@ -83,46 +79,62 @@ namespace ToDoList
             }
 
 
-            Console.WriteLine("\n\nSELECT TO-DO TO DELETE OR PRESS 'q' TO QUIT. ");
-            EveryTaskInList(num);
-            var index = Console.ReadLine().ToLower();
-            int taskToRemove = 0;
-            bool validOrNot = int.TryParse(index, out taskToRemove);
-            if (!validOrNot)
+            
+            bool isDeleting = true;
+            while (isDeleting)
             {
-                Console.WriteLine("You have to choose a number.");
-                return;
+                Console.WriteLine("\n\n\nSELECT TO-DO TO DELETE OR PRESS 'q' TO QUIT. ");
+                EveryTaskInList(num);
+                
+                var index = Console.ReadLine().ToLower();
+                int taskToRemove = 0;
+                if(index == "q")
+                {
+                    isDeleting= false;
+                    return;
+                }
+                bool validOrNot = int.TryParse(index, out taskToRemove);
+                if (!validOrNot)
+                {
+                    Console.WriteLine("You have to choose a number.");
+                    return;
+
+                }
+
+                bool isTaskExisting = Validation.IsThereValidTask(taskToRemove, num);
+                if (!isTaskExisting)
+                {
+                    return;
+                }
+
+                Console.WriteLine("Do you want to delete this to-do? y/n");
+                string yesOrNo = Console.ReadLine().ToLower();
+
+                if (yesOrNo == "y")
+                {
+                    Console.WriteLine("TO-DO REMOVED.");
+                    json[num].Task.RemoveAt(taskToRemove);
+                    CreateToDoListFile.UpDate(json);
+                    
+
+                }
+                else if (yesOrNo == "n")
+                {
+                    Console.WriteLine("TO-DO IS NOT REMOVED.");
+
+                }
+                else
+                {
+                    Console.WriteLine("Only 'y' or 'n'");
+                    isDeleting = false;
+                    return;
+                }
+
+                Validation.IsThereAnyTasks(num);
+
 
             }
-
-            bool isTaskExisting = Validation.IsThereValidTask(taskToRemove, num);
-            if (!isTaskExisting)
-            {
-                return;
-            }
-
-            Console.WriteLine("Do you want to delete this to-do? y/n");
-            string yesOrNo = Console.ReadLine().ToLower();
-
-            if (yesOrNo == "y")
-            {
-
-                json[num].Task.RemoveAt(taskToRemove);
-                Console.WriteLine("\n\nTO-DO REMOVED.");
-                CreateToDoListFile.UpDate(json);
-                return;
-
-            }
-            if (yesOrNo == "n")
-            {
-                return;
-            }
-            else
-            {
-                Console.WriteLine("Only 'y' or 'n'");
-                return;
-
-            }
+            
 
         }
 
@@ -130,7 +142,7 @@ namespace ToDoList
         public static void ChangeTaskName()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\nSELECT LIST TO EDIT TO-DO IN:\n");
+            Console.WriteLine("\n\n\nSELECT LIST TO EDIT TO-DO IN:\n");
             CreateToDoList.EveryListTitleInJson();
             var choosenList = Console.ReadLine();
 
@@ -150,7 +162,7 @@ namespace ToDoList
             }
 
 
-            Console.WriteLine("\nSELECT TO-DO TO RENAME\n");
+            Console.WriteLine("\n\n\nSELECT TO-DO TO RENAME\n");
             EveryTaskInList(num);
             var taskToChange = Console.ReadLine();
             if (string.IsNullOrEmpty(taskToChange))
@@ -175,7 +187,7 @@ namespace ToDoList
             }
 
 
-            Console.WriteLine("ENTER NEW TO-DO NAME:");
+            Console.WriteLine("\n\n\nENTER NEW TO-DO NAME:");
             string newTaskName = Console.ReadLine();
             if (String.IsNullOrEmpty(newTaskName))
             {
@@ -183,6 +195,7 @@ namespace ToDoList
                 return;
             }
 
+            Console.WriteLine("TO-DO CHANGED.");
             json[num].Task[task].TaskTitle = newTaskName;
 
             CreateToDoListFile.UpDate(json);
@@ -196,7 +209,7 @@ namespace ToDoList
         public static void isCompleted()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\nSELECT LIST TO MARK COMPLETED TO-DO'S\n");
+            Console.WriteLine("\n\n\nSELECT LIST TO MARK COMPLETED TO-DO'S\n");
             CreateToDoList.EveryListTitleInJson();
             var listChoice = Console.ReadLine();
             
@@ -220,26 +233,36 @@ namespace ToDoList
             {
                 return;
             }
-
-            Console.WriteLine("\nSELECT TO-DO TO MARK AS COMPLETE:\n");
-            EveryTaskInList(num);
-            var whatToDo = Console.ReadLine();
-            int taskToChange = 0;
-            bool validOrNot = int.TryParse(whatToDo, out taskToChange);
-            if (!validOrNot)
+            bool isCompleted = true;
+            Console.WriteLine("\n\n\nSELECT TO-DO TO MARK AS COMPLETE:\n");
+          
+                EveryTaskInList(num);
+            while (isCompleted)
             {
-                Console.WriteLine("You have to choose a number.");
-                return;
-            }
-            bool isThereTask = Validation.IsThereValidTask(taskToChange, num);
-            if (!isThereTask)
-            {
-                return;
+                var whatToDo = Console.ReadLine();
+                int taskToChange = 0;
+                if(whatToDo == "q")
+                {
+                    return;
+                }
+                bool validOrNot = int.TryParse(whatToDo, out taskToChange);
+                if (!validOrNot)
+                {
+                    Console.WriteLine("You have to choose a number.");
+                    return;
+                }
+                bool isThereTask = Validation.IsThereValidTask(taskToChange, num);
+                if (!isThereTask)
+                {
+                    return;
+                }
+
+                Console.WriteLine("\n\nSelect another to-do to mark as complete or press 'Q' to quit.");
+                json[num].Task[taskToChange].Completed = true;
+                CreateToDoListFile.UpDate(json);
             }
 
-            Console.WriteLine("\n\nTO DO IS NOW MARKED AS COMPLETE.");
-            json[num].Task[taskToChange].Completed = true;
-            CreateToDoListFile.UpDate(json);
+            isCompleted= false;
             return;
 
 
