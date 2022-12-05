@@ -234,11 +234,12 @@ namespace ToDoList
                 return;
             }
             bool isCompleted = true;
-            Console.WriteLine("\n\n\nSELECT TO-DO TO MARK AS COMPLETE:\n");
-          
-                EveryTaskInList(num);
             while (isCompleted)
             {
+                Console.WriteLine("\n\n\nSELECT TO-DO TO MARK AS COMPLETE OR PRESS 'Q' TO QUIT:\n");
+          
+                EveryTaskInList(num);
+          
                 var whatToDo = Console.ReadLine();
                 int taskToChange = 0;
                 if(whatToDo == "q")
@@ -257,9 +258,13 @@ namespace ToDoList
                     return;
                 }
 
-                Console.WriteLine("\n\nSelect another to-do to mark as complete or press 'Q' to quit.");
                 json[num].Task[taskToChange].Completed = true;
                 CreateToDoListFile.UpDate(json);
+
+                Console.WriteLine("\n\n\nHurray!");
+
+
+
             }
 
             isCompleted= false;
