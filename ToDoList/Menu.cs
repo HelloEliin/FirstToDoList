@@ -21,13 +21,13 @@
         {
 
             Console.WriteLine("\n\n\nLISTMENU\n" +
-     "[V]iew lists\n" +
-     "[B]ack to startmenu\n" +
-     "[R]ename list\n" +
-     "[A]dd to-do\n" +
-     "[M]ark task as complete\n" +
-     "[T]o do menu\n" +
-     "[D]elete to-do");
+            "[V]iew lists\n" +
+            "[B]ack to startmenu\n" +
+            "[R]ename list\n" +
+            "[A]dd to-do\n" +
+            "[M]ark task as complete\n" +
+            "[T]o do menu\n" +
+            "[D]elete to-do");
 
             string choice = Console.ReadLine();
 
@@ -79,7 +79,7 @@
                 case "d":
                     AddNewTask.DeleteTask();
                     break;
-                case "b":
+                case "b": ListMenu();
                     break;
                 default:
                     Console.WriteLine("Try again.");

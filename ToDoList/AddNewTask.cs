@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -129,12 +130,18 @@ namespace ToDoList
                     Console.WriteLine("Only 'y' or 'n'");
                     isDeleting = false;
                     return;
+                    
                 }
 
-                Validation.IsThereAnyTasks(num);
-
+                bool anyLeft = Validation.IsThereAnyTasks(num);
+                if (!anyLeft)
+                {
+                    return;
+                }
+               
 
             }
+            
             
 
         }
@@ -237,10 +244,11 @@ namespace ToDoList
 
 
             bool isAllCompleted = Validation.IsAllComplete(num);
-            if(isAllCompleted){
+            if(isAllCompleted)
+            { 
                 return;
             }
-
+ 
             bool isCompleted = true;
             while (isCompleted)
             {
@@ -251,7 +259,7 @@ namespace ToDoList
                 var whatToDo = Console.ReadLine();
                 int taskToChange = 0;
                 if(whatToDo == "q")
-                {
+                { 
                     return;
                 }
                 bool validOrNot = int.TryParse(whatToDo, out taskToChange);
@@ -262,7 +270,7 @@ namespace ToDoList
                 }
                 bool isThereTask = Validation.IsThereValidTask(taskToChange, num);
                 if (!isThereTask)
-                {
+                { 
                     return;
                 }
 
@@ -274,7 +282,7 @@ namespace ToDoList
 
                 bool isItComplete = Validation.IsAllComplete(num);
                 if (isItComplete)
-                {
+                { 
                     return;
                 }
 
