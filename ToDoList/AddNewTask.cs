@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -305,7 +306,7 @@ namespace ToDoList
                 bool isThereTask = Validation.IsThereValidTask(taskToChange, num);
                 if (!isThereTask)
                 { 
-                    return;
+                   return;
                 }
 
                 json[num].Task[taskToChange].Completed = true;
