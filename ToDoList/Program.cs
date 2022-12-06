@@ -59,7 +59,7 @@ namespace ToDoList
 
                     case "q":
                         Console.WriteLine("Do you want to quit? y/n");
-                        string yesOrNo = Console.ReadLine();
+                        string yesOrNo = Console.ReadLine().ToLower();
 
                             if (yesOrNo == "y")
                             {

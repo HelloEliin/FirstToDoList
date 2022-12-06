@@ -75,7 +75,8 @@ namespace ToDoList
             bool allCompleted = json[num].Task.All(x => x.Completed == true);
             if (allCompleted)
             {
-                Console.WriteLine("You're a star baby!\nAll to-do's are completed in this list!");
+                Console.WriteLine("\n\n\n\nYou're a star baby!\nAll to-do's are completed in this list!\n");
+                Console.WriteLine(json[num].ListTitle);
                 AddNewTask.EveryTaskInList(num);
                 return true;
             }

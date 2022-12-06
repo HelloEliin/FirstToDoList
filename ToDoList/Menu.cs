@@ -5,7 +5,7 @@
 
         public static void StartMenu()
         {
-            Console.WriteLine("\n\nMY TO DO LISTS \n\n" +
+            Console.WriteLine("\n\n\n\n[MY DO-DO LISTS]\n\n" +
             "[O]pen recent list\n" +
             "[V]iew lists and listmenu\n" +
             "[C]reate new list\n" +
@@ -20,7 +20,7 @@
         public static void ListMenu()
         {
 
-            Console.WriteLine("\n\n\nLISTMENU\n" +
+            Console.WriteLine("\n\n\n\nLISTMENU\n" +
             "[V]iew lists\n" +
             "[B]ack to startmenu\n" +
             "[R]ename list\n" +
@@ -29,7 +29,7 @@
             "[T]o do menu\n" +
             "[D]elete to-do");
 
-            string choice = Console.ReadLine();
+            string choice = Console.ReadLine().ToLower();
 
             switch (choice)
             {
@@ -69,7 +69,7 @@
            "[D]elete to-to\n" +
            "[B]ack to list menu\n");
 
-            var choice = Console.ReadLine();
+            var choice = Console.ReadLine().ToLower();
 
             switch (choice)
             {

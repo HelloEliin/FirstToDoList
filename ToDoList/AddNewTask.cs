@@ -27,9 +27,15 @@ namespace ToDoList
                 return;
             }
 
+            bool isValidList = Validation.IsThereValidList(num);
+            if (!isValidList)
+            {
+                return;
+            }
+
             while (isAdding)
             {
-                Console.WriteLine("\n\nTo-do to add or press Q to quit: ");
+                Console.WriteLine("\n\nTO-DO TO ADD OR PRESS 'Q' TO QUIT. ");
                 string taskToAdd = Console.ReadLine().ToLower();
                 if (taskToAdd == "q")
                 {
@@ -56,7 +62,7 @@ namespace ToDoList
         public static void DeleteTask()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\nSELECT LIST TO DELETE TO-DO FROM ");
+            Console.WriteLine("\n\n\nSELECT LIST TO DELETE TO-DO FROM");
             CreateToDoList.EveryListTitleInJson();
             var choosenList = Console.ReadLine();
             int num = 0;
@@ -169,10 +175,22 @@ namespace ToDoList
                 return;
             }
 
+            bool isThereTasks = Validation.IsThereAnyTasks(num);
+            if (!isThereTasks)
+            {
+                return;
+            }
 
-            Console.WriteLine("\n\n\nSELECT TO-DO TO RENAME\n");
+
+
+
+            Console.WriteLine("\n\n\nSELECT TO-DO TO RENAME OR PRESS 'Q' TO QUIT");
             EveryTaskInList(num);
-            var taskToChange = Console.ReadLine();
+            var taskToChange = Console.ReadLine().ToLower();
+            if(taskToChange == "q")
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(taskToChange))
             {
                 Console.WriteLine("You have to choose a to-do.");
@@ -195,11 +213,15 @@ namespace ToDoList
             }
 
 
-            Console.WriteLine("\n\n\nENTER NEW TO-DO NAME:");
-            string newTaskName = Console.ReadLine();
+            Console.WriteLine("\n\n\nENTER NEW TO-DO NAME OR PRESS 'Q' TO QUIT.");
+            string newTaskName = Console.ReadLine().ToLower();
             if (String.IsNullOrEmpty(newTaskName))
             {
                 Console.WriteLine("You have to enter a new name.");
+                return;
+            }
+            if(newTaskName == "q")
+            {
                 return;
             }
 
@@ -249,14 +271,14 @@ namespace ToDoList
                 return;
             }
  
-            bool isCompleted = true;
-            while (isCompleted)
+            bool isToComplete = true;
+            while (isToComplete)
             {
-                Console.WriteLine("\n\n\nSELECT TO-DO TO MARK AS COMPLETE OR PRESS 'Q' TO QUIT:\n");
+                Console.WriteLine("\n\n\nSELECT TO-DO TO MARK AS COMPLETE OR PRESS 'Q' TO QUIT.\n");
           
                 EveryTaskInList(num);
-          
-                var whatToDo = Console.ReadLine();
+
+                var whatToDo = Console.ReadLine().ToLower();
                 int taskToChange = 0;
                 if(whatToDo == "q")
                 { 
@@ -288,7 +310,7 @@ namespace ToDoList
 
             }
 
-            isCompleted= false;
+            isToComplete= false;
             return;
 
 

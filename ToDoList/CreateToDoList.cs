@@ -81,7 +81,7 @@ namespace ToDoList
             }
 
             Console.WriteLine("\nDo you want to delete this list? y/n");
-            string yesOrNo = Console.ReadLine();
+            string yesOrNo = Console.ReadLine().ToLower();
             if (yesOrNo == "y")
             {
                 Console.WriteLine("LIST DELETED.");
@@ -124,12 +124,16 @@ namespace ToDoList
                 return;
             }
 
-            Console.WriteLine("ENTER NEW LISTNAME:");
+            Console.WriteLine("ENTER NEW LISTNAME OR PRESS 'Q' TO QUIT.");
             string newListName = Console.ReadLine().ToUpper();
    
             if (String.IsNullOrEmpty(newListName))
             {
                 Console.WriteLine("You have to put a name on your list.");
+                return;
+            }
+            if(newListName == "Q")
+            {
                 return;
             }
 
