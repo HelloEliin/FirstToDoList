@@ -8,13 +8,10 @@ namespace ToDoList
         static void Main(string[] args)
         {
             
-
           var json = new CreateToDoListFile();
           json.CreateFile();
           string menuChoice;
           bool isRunning = true;
-          string menuTwo;
-
 
             do {
 

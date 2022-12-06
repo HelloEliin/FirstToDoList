@@ -31,7 +31,7 @@ namespace ToDoList
 
             if (choosenList > json.Count || choosenList < 0)
             {
-                Console.WriteLine("That list dont exist.");
+                Console.WriteLine("\n\nThat list dont exist.");
                 return false;
 
             }
@@ -46,7 +46,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             if (json[choosenList].Task.Count == 0)
             {
-                Console.WriteLine("You have no to-do's in this list.");
+                Console.WriteLine("\n\nYou have no to-do's in this list.");
                 return false;
             }
 
@@ -59,7 +59,7 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             if (json[choosenList].Task.Count < task || json[choosenList].Task.Count < 0)
             {
-                Console.WriteLine("That to-do dont exist.");
+                Console.WriteLine("\n\nThat to-do dont exist.");
                 return false;
             }
 

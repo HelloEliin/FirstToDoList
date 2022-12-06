@@ -19,8 +19,12 @@ namespace ToDoList
         public static void CreateNewToDoList()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\nENTER NAME OF LIST\n");
+            Console.WriteLine("\n\nENTER NAME OF LIS OR PRESS 'Q' TO QUIT.\n");
             var listName = Console.ReadLine().ToUpper();
+            if(listName == "Q")
+            {
+                return;
+            }
             if (String.IsNullOrEmpty(listName))
             {
                 Console.WriteLine("You have to put a name on your list.");
@@ -63,9 +67,13 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int num = 0;
 
-            Console.WriteLine("\n\n\nSELECT LIST TO DELETE \n");
+            Console.WriteLine("\n\n\nSELECT LIST TO DELETE OR PRESS 'Q' TO QUIT. \n");
             EveryListTitleInJson();
-            var choosenList = Console.ReadLine();
+            var choosenList = Console.ReadLine().ToLower();
+            if(choosenList == "q")
+            {
+                return;
+            }
             
             bool valid = int.TryParse(choosenList, out num);    
             if (!valid)
@@ -107,10 +115,14 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int num = 0;
 
-            Console.WriteLine("\n\n\nSELECT LIST TO RENAME \n");
+            Console.WriteLine("\n\n\nSELECT LIST TO RENAME OR PRESS 'Q' TO QUIT. \n");
             EveryListTitleInJson();
 
-            var choosenList = Console.ReadLine();
+            var choosenList = Console.ReadLine().ToLower();
+            if(choosenList == "q")
+            {
+                return;
+            }
             bool valid = int.TryParse(choosenList, out num);
             if (!valid)
             {
@@ -147,9 +159,14 @@ namespace ToDoList
         public static void ViewOneList()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\nSELECT LIST TO VIEW\n");
+            Console.WriteLine("\n\n\nSELECT LIST TO VIEW PRESS 'Q' TO QUIT.\n");
             EveryListTitleInJson();
-            var choosenList = Console.ReadLine();
+            var choosenList = Console.ReadLine().ToLower();
+            if(choosenList == "q")
+            {
+                return;
+            }
+
             int num = 0;
             bool valid = int.TryParse(choosenList, out num);
             if (!valid)

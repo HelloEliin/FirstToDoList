@@ -17,9 +17,13 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             int num = 0;
 
-            Console.WriteLine("\n\n\nSELECT LIST TO ADD TO-DO'S TO\n");
+            Console.WriteLine("\n\n\nSELECT LIST TO ADD TO-DO'S TO OR PRESS 'Q' TO QUIT.\n");
             CreateToDoList.EveryListTitleInJson();
-            var choosenList = Console.ReadLine();
+            var choosenList = Console.ReadLine().ToLower();
+            if(choosenList == "q")
+            {
+                return;
+            }
             bool valid = int.TryParse(choosenList, out num);
             if (!valid)
             {
@@ -62,9 +66,13 @@ namespace ToDoList
         public static void DeleteTask()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\nSELECT LIST TO DELETE TO-DO FROM");
+            Console.WriteLine("\n\n\nSELECT LIST TO DELETE TO-DO FROM OR PRESS 'Q' TO QUIT.");
             CreateToDoList.EveryListTitleInJson();
-            var choosenList = Console.ReadLine();
+            var choosenList = Console.ReadLine().ToLower();
+            if(choosenList == "q")
+            { 
+                return;
+            }
             int num = 0;
             bool valid = int.TryParse(choosenList, out num);
             if (!valid)
@@ -156,9 +164,13 @@ namespace ToDoList
         public static void ChangeTaskName()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\nSELECT LIST TO EDIT TO-DO IN:\n");
+            Console.WriteLine("\n\n\nSELECT LIST TO EDIT TO-DO IN OR PRESS 'Q' TO QUIT.\n");
             CreateToDoList.EveryListTitleInJson();
-            var choosenList = Console.ReadLine();
+            var choosenList = Console.ReadLine().ToLower();
+            if(choosenList == "q")
+            {
+                return;
+            }
 
             int num = 0;
 
