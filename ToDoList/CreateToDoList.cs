@@ -325,13 +325,13 @@ namespace ToDoList
 
 
                 }
-                //bool noListToMove = json[i].ThisWeek.Equals(true);
+                bool noListToMove = json[i].ThisWeek.Equals(true);
 
-                //if (noListToMove)
-                //{
-                //    Console.WriteLine("No lists to move :-)");
-                //    return;
-                //}
+                if (noListToMove)
+                {
+                    Console.WriteLine("No lists to move :-)");
+                    return;
+                }
 
 
             }
