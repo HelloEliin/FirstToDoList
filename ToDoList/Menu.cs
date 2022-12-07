@@ -21,7 +21,7 @@
         {
 
             Console.WriteLine("\n\n\n\nLISTMENU\n" +
-            "\n--- [1]LISTS FOR THIS WEEK\n" +
+            "\n--- [1] LISTS FOR THIS WEEK\n" +
             "--- [2] MOVE LISTS TO THIS WEEKS TO DO \n" +
             "--- [3] UNFINISHED LISTS \n\n" +
             "[V]iew lists\n" +
@@ -65,7 +65,7 @@
                     CreateToDoList.ShowThisWeeksLists();
                     break;
                 case "2":
-                    CreateToDoList.ListsForThisWeek();  
+                    CreateToDoList.AddListsForThisWeek();  
                     break;
                 case "3":
                     CreateToDoList.UnFinishedLists();
