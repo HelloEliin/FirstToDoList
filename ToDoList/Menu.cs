@@ -21,9 +21,9 @@
         {
 
             Console.WriteLine("\n\n\n\nLISTMENU\n" +
-            "\n--- [1] LISTS FOR THIS WEEK\n" +
-            "--- [2] MOVE LISTS TO THIS WEEKS TO DO \n" +
-            "--- [3] UNFINISHED LISTS \n\n" +
+            "\n--- [1] LISTS TO BE COMPLETE WITHIN A WEEK\n" +
+            "--- [2] ADD LISTS TO BE COMPLETE WITHIN A WEEK \n" +
+            "--- [3] EXPIRED LISTS \n\n" +
             "[V]iew lists\n" +
             "[B]ack to startmenu\n" +
             "[R]ename list\n" +
@@ -65,7 +65,7 @@
                     CreateToDoList.ShowThisWeeksLists();
                     break;
                 case "2":
-                    CreateToDoList.AddListsForThisWeek();  
+                    CreateToDoList.AddListToCompleteInAWeek();
                     break;
                 case "3":
                     CreateToDoList.UnFinishedLists();
