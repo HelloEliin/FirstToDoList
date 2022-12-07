@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace ToDoList
 {
@@ -15,6 +17,8 @@ namespace ToDoList
 
         public string ListTitle { get; set; }
         public List<Task> Task { get; set; }
+        public string Date { get; set; }
+        public bool ThisWeek { get; set; }  
 
         public static void CreateNewToDoList()
         {
@@ -31,10 +35,13 @@ namespace ToDoList
                 return;
             }
 
+
             var newList = new CreateToDoList()
             {
                 ListTitle = listName,
-                Task = new List<Task>()
+                Task = new List<Task>(),
+                Date = DateTime.Now.ToString("G"),
+                ThisWeek = false,
 
             };
 
@@ -51,6 +58,7 @@ namespace ToDoList
             Validation.IsThereAnyLists();
             int index = -1;
             Console.WriteLine("\n\n\nALL OF YOUR LISTS\n");
+
             foreach (var title in json)
             {
                 index++;
@@ -229,12 +237,152 @@ namespace ToDoList
         {
             var json = CreateToDoListFile.GetJson();
             int index = -1;
+ 
             foreach (var title in json)
             {
                 index++;
                 Console.WriteLine(title.ListTitle + "\nPress: " + "[" + index + "]" + "\n");
             }
         }
+
+
+        public static void SortLists()
+        {
+            Console.WriteLine("HOW DO YOU WANT TO SORT?\n" +
+                "[N]ewest list\n" +
+                "[O]ldest list\n" +
+                "[B]y name\n" );
+            var howToSort = Console.ReadLine().ToLower();
+            if (string.IsNullOrEmpty(howToSort))
+            {
+                Console.WriteLine("Try again.");
+                return;
+            }
+
+            var json = CreateToDoListFile.GetJson();
+
+            
+            switch (howToSort)
+            {
+                case "n": SortByNewest();
+                    break;
+                case "o": SortByOldest();
+                    break;
+                case "b": SortByName();
+                    break;
+                case "h":
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+        public static void SortByNewest()
+        {
+            var json = CreateToDoListFile.GetJson();
+            json = json.OrderBy(x => x.Date).ToList();
+            CreateToDoListFile.UpDate(json);
+            Console.WriteLine("NEW ORDER SAVED.");
+        }
+
+
+        public static void SortByOldest()
+        {
+
+            var json = CreateToDoListFile.GetJson();
+            json = json.OrderByDescending(x => x.Date).ToList();
+            CreateToDoListFile.UpDate(json);
+            Console.WriteLine("NEW ORDER SAVED.");
+
+        }
+
+
+        public static void SortByName()
+        {
+            var json = CreateToDoListFile.GetJson();
+            json = json.OrderBy(x => x.ListTitle).ToList();
+            CreateToDoListFile.UpDate(json);
+            Console.WriteLine("NEW ORDER SAVED.");
+        }
+
+
+        public static void ListsForThisWeek()
+        {
+            var json = CreateToDoListFile.GetJson();
+            Console.WriteLine("\n\n\n\nWHAT LIST TO ADD FOR THIS WEEKS TO-DO?\n\n");
+
+            for(int i = 0; i < json.Count; i++)
+            {
+                
+                if(json[i].ThisWeek == false)
+                {
+                    Console.WriteLine("[" + i + "] " + json[i].ListTitle);
+                }
+                
+    
+            }
+
+                
+            
+            var whichList = Console.ReadLine();
+            int listToMove = 0;
+
+            bool validOrNot = int.TryParse(whichList, out listToMove);
+            if (!validOrNot)
+            {
+                Console.WriteLine("You have to choose a number.");
+                return;
+            }
+           
+            json[listToMove].ThisWeek = true;
+            CreateToDoListFile.UpDate(json);
+        }
+
+        public static void ShowThisWeeksLists()
+        {
+            var json = CreateToDoListFile.GetJson();
+            Console.WriteLine("\n\n\nTHESE LISTS NEEDS TO BE DONE THIS WEEK :-)\n\n");
+            for(int i = 0; i < json.Count; i++)
+            {
+                
+                if (json[i].ThisWeek == true)
+                {
+                    Console.WriteLine(json[i].ListTitle);
+                }
+                
+            }
+
+        }
+
+
+        public static void UnFinishedLists()
+        {
+            var json = CreateToDoListFile.GetJson();
+
+
+
+            Console.WriteLine("\n\n\nUNFINISHED LISTS\n\n");
+            for (int i = 0; i < json.Count; i++)
+            {
+
+                if (json[i].ThisWeek == true)
+                {
+                    DateTime start = DateTime.Parse(json[i].Date);
+                    DateTime expiry = start.AddMinutes(7); 
+
+                    if (DateTime.Now > expiry)
+                    {
+                        Console.WriteLine(json[i].ListTitle);
+                    }
+                
+                }
+
+            }
+        }
+
+
+
 
 
 

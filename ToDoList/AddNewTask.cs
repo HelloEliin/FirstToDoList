@@ -100,7 +100,7 @@ namespace ToDoList
             bool isDeleting = true;
             while (isDeleting)
             {
-                Console.WriteLine("\n\n\nSELECT TO-DO TO DELETE OR PRESS 'q' TO QUIT. ");
+                Console.WriteLine("\n\n\nSELECT TO-DO TO DELETE OR PRESS 'Q' TO QUIT. ");
                 EveryTaskInList(num);
                 
                 var index = Console.ReadLine().ToLower();
@@ -252,9 +252,13 @@ namespace ToDoList
         public static void isCompleted()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\nSELECT LIST TO MARK COMPLETED TO-DO'S\n");
+            Console.WriteLine("\n\n\nSELECT LIST TO MARK COMPLETED TO-DO'S OR PRESS 'Q' TO QUIT.\n");
             CreateToDoList.EveryListTitleInJson();
-            var listChoice = Console.ReadLine();
+            var listChoice = Console.ReadLine().ToLower();
+            if(listChoice == "q")
+            {
+                return;
+            }
             
             int num = 0;
 

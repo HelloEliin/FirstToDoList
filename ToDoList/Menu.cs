@@ -21,13 +21,17 @@
         {
 
             Console.WriteLine("\n\n\n\nLISTMENU\n" +
+            "\n--- [1]LISTS FOR THIS WEEK\n" +
+            "--- [2] MOVE LISTS TO THIS WEEKS TO DO \n" +
+            "--- [3] UNFINISHED LISTS \n\n" +
             "[V]iew lists\n" +
             "[B]ack to startmenu\n" +
             "[R]ename list\n" +
             "[A]dd to-do\n" +
             "[M]ark task as complete\n" +
             "[T]o do menu\n" +
-            "[D]elete to-do");
+            "[D]elete to-do\n" +
+            "[S]ort lists");
 
             string choice = Console.ReadLine().ToLower();
 
@@ -53,6 +57,18 @@
                     break;
                 case "d":
                     AddNewTask.DeleteTask();
+                    break;
+                case "s":
+                    CreateToDoList.SortLists();
+                    break;
+                case "1":
+                    CreateToDoList.ShowThisWeeksLists();
+                    break;
+                case "2":
+                    CreateToDoList.ListsForThisWeek();  
+                    break;
+                case "3":
+                    CreateToDoList.UnFinishedLists();
                     break;
                 default:
                     Console.WriteLine("Try again.");
