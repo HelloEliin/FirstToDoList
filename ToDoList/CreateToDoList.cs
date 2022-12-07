@@ -314,30 +314,43 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             Console.WriteLine("\n\n\n\nWHAT LIST TO ADD FOR THIS WEEKS TO-DO? PRESS 'Q' TO QUIT.\n\n");
 
-            for(int i = 0; i < json.Count; i++)
+
+            for (int i = 0; i < json.Count; i++)
             {
-                
-                if(json[i].ThisWeek == false)
+            
+
+                if (json[i].ThisWeek == false)
                 {
                     Console.WriteLine("[" + i + "] " + json[i].ListTitle);
-                }
 
-    
+
+                }
+                //bool noListToMove = json[i].ThisWeek.Equals(true);
+
+                //if (noListToMove)
+                //{
+                //    Console.WriteLine("No lists to move :-)");
+                //    return;
+                //}
+
+
             }
+
+
 
             var whichList = Console.ReadLine().ToLower();
             int listToMove = 0;
-
+            if (whichList == "q")
+            {
+                return;
+            }
             bool validOrNot = int.TryParse(whichList, out listToMove);
             if (!validOrNot)
             {
                 Console.WriteLine("You have to choose a number.");
                 return;
             }
-            if(whichList == "q")
-            {
-                return;
-            }
+     
            
             json[listToMove].ThisWeek = true;
             CreateToDoListFile.UpDate(json);
@@ -348,47 +361,59 @@ namespace ToDoList
         public static void ShowThisWeeksLists()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\nTHESE LISTS NEEDS TO BE DONE THIS WEEK :-)\n\n");
+            Console.WriteLine("\n\n\nYOUR LISTS FOR THIS WEEK :-)\n\n");
             for(int i = 0; i < json.Count; i++)
-            {
-                
+            { 
                 if (json[i].ThisWeek == true && json[i].Expired == false)
                 {
                     Console.WriteLine(json[i].ListTitle);
+                    
                 }
-                
-            }
+                else
+                {
+                    Console.WriteLine("No lists added yet :-)");
+                    return;
+                }
 
+
+            }
         }
 
 
         public static void UnFinishedLists()
         {
             var json = CreateToDoListFile.GetJson();
-
-            Console.WriteLine("\n\n\n- UNFINISHED LISTS FROM LAST WEEK - \n\n");
+            Console.WriteLine("\n\n\n- UNFINISHED LISTS - \n\n");
+            
             for (int i = 0; i < json.Count; i++)
             {
                 DateTime start = DateTime.Parse(json[i].Date);
-                DateTime expiry = start.AddMinutes(7);
+                DateTime expiry = start.AddMinutes(1);
+                bool allCompleted = json[i].Task.All(x => x.Completed == true);
 
                 if (json[i].ThisWeek == true)
                 {
-
+                    
                     if (DateTime.Now > expiry)
                     {
                         json[i].Expired= true;
-                        Console.WriteLine(json[i].ListTitle);
                         CreateToDoListFile.UpDate(json);
+
+                        if (!allCompleted || json[i].Task.Count == 0)
+                        {
+                            Console.WriteLine(json[i].ListTitle);
+                        }
+               
                     }
+
+                    //if (start < expiry) // Funkar ej
+                    //{
+                    //    Console.WriteLine("No expired lists.");
+                    //    return;
+                    //}
                 }
 
             }
-
-            
-
-
-
 
         }
 
