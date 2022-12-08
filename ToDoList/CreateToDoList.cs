@@ -321,9 +321,11 @@ namespace ToDoList
             for (int i = 0; i < json.Count; i++)
             {
                var allDone = json[i].Task.All(x => x.Completed == true);
-                if (allDone)
+                var orNull = json[i].Task.Any();
+                if (allDone == true && orNull == true)
                 {
                     Console.WriteLine(json[i].ListTitle);
+                    AddNewTask.EveryTaskInList(i);
 
                 }
             }
@@ -380,19 +382,24 @@ namespace ToDoList
             {
                 if (json[i].ThisWeek == true && json[i].Expired == false)
                 {
-
-                    DateTime start = DateTime.Parse(json[i].Date);
-                    DateTime expiry = start.AddDays(7);
-                    TimeSpan span = expiry - DateTime.Now;
-                    Console.WriteLine("\n\n" + json[i].ListTitle + "\n*" + span.Days + " days left to complete *");
+                    bool complete = json[i].Task.All(x => x.Completed == true);
+                    bool empty = json[i].Task.Count == 0;
+                    if (!complete || empty)
+                    {
+                        DateTime start = DateTime.Parse(json[i].Date);
+                        DateTime expiry = start.AddDays(7);
+                        TimeSpan span = expiry - DateTime.Now;
+                        Console.WriteLine("\n\n" + json[i].ListTitle + "\n*" + span.Days + " days left to complete *");
+                    }  
 
                 }
             }
+            
 
             var noLists = json.All(x => x.ThisWeek == false);
             if (noLists == true)
             {
-                Console.WriteLine("No lists added yet :-)");
+                Console.WriteLine("No lists added yet!");
                 return;
             }
         }
@@ -401,7 +408,7 @@ namespace ToDoList
         public static void UnFinishedLists()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\n- EXPIRED AND UNFINISED LISTS - \n\n");
+            Console.WriteLine("\n\n\n- EXPIRED AND UNFINISED LISTS - \n");
 
             for (int i = 0; i < json.Count; i++)
             {
