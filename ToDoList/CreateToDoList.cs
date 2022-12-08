@@ -328,9 +328,12 @@ namespace ToDoList
                     AddNewTask.EveryTaskInList(i);
 
                 }
+
+
+
             }
+
         }
-        
 
         public static void AddListToCompleteInAWeek()
         {
