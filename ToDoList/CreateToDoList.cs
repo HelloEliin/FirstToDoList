@@ -317,30 +317,22 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
             Console.WriteLine("\n\n\n\nWHAT LIST TO ADD TO BE COMPLETED WITHIN A WEEK? PRESS 'Q' TO QUIT.\n\n");
 
-            //bool allCompleted = json[num].Task.All(x => x.Completed == true);
-
-
 
             for (int i = 0; i < json.Count; i++)
             {
-
-                if (json[i].ThisWeek == false)
+                if (json[i].ThisWeek == false && json[i].Expired == false)
                 {
                     Console.WriteLine("[" + i + "] " + json[i].ListTitle);
 
                 }
-                //bool noListToMove = json[i].ThisWeek.Equals(true);
-
-                //if (noListToMove)
-                //{
-                //    Console.WriteLine("No lists to move :-)");
-                //    return;
-                //}
-
-
             }
 
-
+            var isThereAnyToMove = json.All(x => x.Expired == true);
+            if (isThereAnyToMove == true)
+            {
+                Console.WriteLine("No lists to move :-)");
+                return;
+            }
 
             var whichList = Console.ReadLine().ToLower();
             int listToMove = 0;
@@ -371,13 +363,20 @@ namespace ToDoList
             {
                 if (json[i].ThisWeek == true && json[i].Expired == false)
                 {
-                    
-                        DateTime start = DateTime.Parse(json[i].Date);
-                        DateTime expiry = start.AddDays(7);
-                        TimeSpan span = expiry - DateTime.Now;
-                        Console.WriteLine("\n\n" + json[i].ListTitle + "\n*" + span.Days  + " days left to complete *");
+
+                    DateTime start = DateTime.Parse(json[i].Date);
+                    DateTime expiry = start.AddSeconds(20);
+                    TimeSpan span = expiry - DateTime.Now;
+                    Console.WriteLine("\n\n" + json[i].ListTitle + "\n*" + span.Minutes + " days left to complete *");
 
                 }
+            }
+
+            var noLists = json.All(x => x.ThisWeek == false);
+            if (noLists == true)
+            {
+                Console.WriteLine("No lists added yet :-)");
+                return;
             }
         }
 
@@ -392,12 +391,13 @@ namespace ToDoList
                 DateTime start = DateTime.Parse(json[i].Date);
                 DateTime expiry = start.AddSeconds(20);
                 TimeSpan span = start - expiry;
-                Console.WriteLine(span.ToString()); 
+
                 bool allCompleted = json[i].Task.All(x => x.Completed == true);
 
-                if (json[i].ThisWeek == true && DateTime.Now > expiry)
+                if (DateTime.Now > expiry)
                 {
                     json[i].Expired = true;
+                    json[i].ThisWeek = false;
                     CreateToDoListFile.UpDate(json);
 
                     if (!allCompleted || json[i].Task.Count == 0)
