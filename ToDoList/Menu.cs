@@ -23,7 +23,8 @@
             Console.WriteLine("\n\n\n\nLISTMENU\n" +
             "\n--- [1] LISTS TO BE COMPLETE WITHIN A WEEK\n" +
             "--- [2] ADD LISTS TO BE COMPLETE WITHIN A WEEK \n" +
-            "--- [3] EXPIRED LISTS \n\n" +
+            "--- [3] EXPIRED LISTS \n" +
+            "--- [4] FINISHED LISTS \n\n" +
             "[V]iew lists\n" +
             "[B]ack to startmenu\n" +
             "[R]ename list\n" +
@@ -69,6 +70,9 @@
                     break;
                 case "3":
                     CreateToDoList.UnFinishedLists();
+                    break;
+                case "4":
+                    CreateToDoList.FinishedLists();
                     break;
                 default:
                     Console.WriteLine("Try again.");

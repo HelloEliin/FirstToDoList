@@ -10,33 +10,24 @@ namespace ToDoList
         
         public static bool IsThereAnyLists()
         {
-
             var json = CreateToDoListFile.GetJson();
             if (json?.Any() != true)
             {
                 Console.WriteLine("You have no lists.");
                 return false;
             }
-
             return true;
-
-
         }
 
 
         public static bool IsThereValidList(int choosenList)
         {
             var json = CreateToDoListFile.GetJson();
-       
-
             if (choosenList > json.Count || choosenList < 0)
             {
                 Console.WriteLine("\n\nThat list dont exist.");
                 return false;
-
             }
-
-
             return true;
         }
 
@@ -49,7 +40,6 @@ namespace ToDoList
                 Console.WriteLine("\n\nYou have no to-do's in this list.");
                 return false;
             }
-
             return true;
         }
 
@@ -62,9 +52,7 @@ namespace ToDoList
                 Console.WriteLine("\n\nThat to-do dont exist.");
                 return false;
             }
-
             return true;
-
         }
 
 
@@ -80,7 +68,6 @@ namespace ToDoList
                 AddNewTask.EveryTaskInList(num);
                 return true;
             }
-
             return false;
         }
 

@@ -312,11 +312,28 @@ namespace ToDoList
         }
 
 
+        public static void FinishedLists()
+        {
+            var json = CreateToDoListFile.GetJson();
+
+            Console.WriteLine("\n\n\n\nALL OF YOUR FINISED LISTS.\n\n");
+
+            for (int i = 0; i < json.Count; i++)
+            {
+               var allDone = json[i].Task.All(x => x.Completed == true);
+                if (allDone)
+                {
+                    Console.WriteLine(json[i].ListTitle);
+
+                }
+            }
+        }
+        
+
         public static void AddListToCompleteInAWeek()
         {
             var json = CreateToDoListFile.GetJson();
             Console.WriteLine("\n\n\n\nWHAT LIST TO ADD TO BE COMPLETED WITHIN A WEEK? PRESS 'Q' TO QUIT.\n\n");
-
 
             for (int i = 0; i < json.Count; i++)
             {
@@ -365,9 +382,9 @@ namespace ToDoList
                 {
 
                     DateTime start = DateTime.Parse(json[i].Date);
-                    DateTime expiry = start.AddSeconds(20);
+                    DateTime expiry = start.AddDays(7);
                     TimeSpan span = expiry - DateTime.Now;
-                    Console.WriteLine("\n\n" + json[i].ListTitle + "\n*" + span.Minutes + " days left to complete *");
+                    Console.WriteLine("\n\n" + json[i].ListTitle + "\n*" + span.Days + " days left to complete *");
 
                 }
             }
@@ -389,7 +406,7 @@ namespace ToDoList
             for (int i = 0; i < json.Count; i++)
             {
                 DateTime start = DateTime.Parse(json[i].Date);
-                DateTime expiry = start.AddSeconds(20);
+                DateTime expiry = start.AddDays(7);
                 TimeSpan span = start - expiry;
 
                 bool allCompleted = json[i].Task.All(x => x.Completed == true);
@@ -406,6 +423,13 @@ namespace ToDoList
                     }
                 }
 
+            }
+
+            var noLists = json.All(x => x.Expired == false);
+            if (noLists == true)
+            {
+                Console.WriteLine("No expired lists :-)");
+                return;
             }
 
         }
