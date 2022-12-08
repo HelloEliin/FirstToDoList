@@ -18,15 +18,15 @@ namespace ToDoList
         public string ListTitle { get; set; }
         public List<Task> Task { get; set; }
         public string Date { get; set; }
-        public bool ThisWeek { get; set; } 
-        public bool Expired { get; set; }   
+        public bool ThisWeek { get; set; }
+        public bool Expired { get; set; }
 
         public static void CreateNewToDoList()
         {
             var json = CreateToDoListFile.GetJson();
             Console.WriteLine("\n\nENTER NAME OF LIS OR PRESS 'Q' TO QUIT.\n");
             var listName = Console.ReadLine().ToUpper();
-            if(listName == "Q")
+            if (listName == "Q")
             {
                 return;
             }
@@ -64,7 +64,7 @@ namespace ToDoList
             foreach (var title in json)
             {
                 index++;
-                Console.WriteLine("[" + index +"] " + title.ListTitle + "\n");
+                Console.WriteLine("[" + index + "] " + title.ListTitle + "\n");
             }
             return;
 
@@ -80,12 +80,12 @@ namespace ToDoList
             Console.WriteLine("\n\n\nSELECT LIST TO DELETE OR PRESS 'Q' TO QUIT. \n");
             EveryListTitleInJson();
             var choosenList = Console.ReadLine().ToLower();
-            if(choosenList == "q")
+            if (choosenList == "q")
             {
                 return;
             }
-            
-            bool valid = int.TryParse(choosenList, out num);    
+
+            bool valid = int.TryParse(choosenList, out num);
             if (!valid)
             {
                 Console.WriteLine("You have to choose a number.");
@@ -129,7 +129,7 @@ namespace ToDoList
             EveryListTitleInJson();
 
             var choosenList = Console.ReadLine().ToLower();
-            if(choosenList == "q")
+            if (choosenList == "q")
             {
                 return;
             }
@@ -148,13 +148,13 @@ namespace ToDoList
 
             Console.WriteLine("ENTER NEW LISTNAME OR PRESS 'Q' TO QUIT.");
             string newListName = Console.ReadLine().ToUpper();
-   
+
             if (String.IsNullOrEmpty(newListName))
             {
                 Console.WriteLine("You have to put a name on your list.");
                 return;
             }
-            if(newListName == "Q")
+            if (newListName == "Q")
             {
                 return;
             }
@@ -172,7 +172,7 @@ namespace ToDoList
             Console.WriteLine("\n\n\nSELECT LIST TO VIEW PRESS 'Q' TO QUIT.\n");
             EveryListTitleInJson();
             var choosenList = Console.ReadLine().ToLower();
-            if(choosenList == "q")
+            if (choosenList == "q")
             {
                 return;
             }
@@ -188,7 +188,7 @@ namespace ToDoList
             if (!validOrNot)
             {
                 return;
-            
+
             }
             Console.WriteLine(json[num].ListTitle);
             Validation.IsThereAnyTasks(num);
@@ -214,7 +214,7 @@ namespace ToDoList
 
             foreach (var task in json[0].Task)
             {
-               
+
                 if (task.Completed == true)
                 {
 
@@ -239,7 +239,7 @@ namespace ToDoList
         {
             var json = CreateToDoListFile.GetJson();
             int index = -1;
- 
+
             foreach (var title in json)
             {
                 index++;
@@ -253,7 +253,7 @@ namespace ToDoList
             Console.WriteLine("HOW DO YOU WANT TO SORT?\n" +
                 "[N]ewest list\n" +
                 "[O]ldest list\n" +
-                "[B]y name\n" );
+                "[B]y name\n");
             var howToSort = Console.ReadLine().ToLower();
             if (string.IsNullOrEmpty(howToSort))
             {
@@ -263,14 +263,17 @@ namespace ToDoList
 
             var json = CreateToDoListFile.GetJson();
 
-            
+
             switch (howToSort)
             {
-                case "n": SortByNewest();
+                case "n":
+                    SortByNewest();
                     break;
-                case "o": SortByOldest();
+                case "o":
+                    SortByOldest();
                     break;
-                case "b": SortByName();
+                case "b":
+                    SortByName();
                     break;
                 case "h":
                     break;
@@ -351,26 +354,30 @@ namespace ToDoList
                 Console.WriteLine("You have to choose a number.");
                 return;
             }
-     
-           
+
+
             json[listToMove].ThisWeek = true;
             CreateToDoListFile.UpDate(json);
         }
 
 
 
-        public static void ShowThisWeeksLists()
+        public static void ShowWeeklyLists()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\nYOUR LISTS TO BE COMPLETED IN A WEEK :-)\n\n");
-            for(int i = 0; i < json.Count; i++)
-            { 
+            Console.WriteLine("\n\n\nYOUR LISTS TO BE COMPLETED IN A WEEK :-)\n");
+
+            for (int i = 0; i < json.Count; i++)
+            {
                 if (json[i].ThisWeek == true && json[i].Expired == false)
                 {
-                    Console.WriteLine(json[i].ListTitle);
                     
-                }
+                        DateTime start = DateTime.Parse(json[i].Date);
+                        DateTime expiry = start.AddDays(7);
+                        TimeSpan span = expiry - DateTime.Now;
+                        Console.WriteLine("\n\n" + json[i].ListTitle + "\n*" + span.Days  + " days left to complete *");
 
+                }
             }
         }
 
@@ -378,29 +385,25 @@ namespace ToDoList
         public static void UnFinishedLists()
         {
             var json = CreateToDoListFile.GetJson();
-            Console.WriteLine("\n\n\n- ËXPIRED LISTS - \n\n");
-            
+            Console.WriteLine("\n\n\n- EXPIRED AND UNFINISED LISTS - \n\n");
+
             for (int i = 0; i < json.Count; i++)
             {
                 DateTime start = DateTime.Parse(json[i].Date);
-                DateTime expiry = start.AddMinutes(3);
+                DateTime expiry = start.AddSeconds(20);
+                TimeSpan span = start - expiry;
+                Console.WriteLine(span.ToString()); 
                 bool allCompleted = json[i].Task.All(x => x.Completed == true);
 
-                if (json[i].ThisWeek == true)
+                if (json[i].ThisWeek == true && DateTime.Now > expiry)
                 {
-                    
-                    if (DateTime.Now > expiry)
+                    json[i].Expired = true;
+                    CreateToDoListFile.UpDate(json);
+
+                    if (!allCompleted || json[i].Task.Count == 0)
                     {
-                        json[i].Expired= true;
-                        CreateToDoListFile.UpDate(json);
-
-                        if (!allCompleted || json[i].Task.Count == 0)
-                        {
-                            Console.WriteLine(json[i].ListTitle);
-                        }
-               
+                        Console.WriteLine(json[i].ListTitle);
                     }
-
                 }
 
             }

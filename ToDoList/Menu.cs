@@ -62,7 +62,7 @@
                     CreateToDoList.SortLists();
                     break;
                 case "1":
-                    CreateToDoList.ShowThisWeeksLists();
+                    CreateToDoList.ShowWeeklyLists();
                     break;
                 case "2":
                     CreateToDoList.AddListToCompleteInAWeek();
