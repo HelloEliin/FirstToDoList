@@ -23,7 +23,7 @@ namespace ToDoList
         public static bool IsThereValidList(int choosenList)
         {
             var json = CreateToDoListFile.GetJson();
-            if (choosenList > json.Count || choosenList < 0)
+            if (choosenList > json.Count - 1 || choosenList < 0)
             {
                 Console.WriteLine("\n\nThat list dont exist.");
                 return false;
@@ -47,7 +47,7 @@ namespace ToDoList
         public static bool IsThereValidTask(int task, int choosenList)
         {
             var json = CreateToDoListFile.GetJson();
-            if (json[choosenList].Task.Count < task || json[choosenList].Task.Count < 0)
+            if (json[choosenList].Task.Count - 1 < task || json[choosenList].Task.Count < 0)
             {
                 Console.WriteLine("\n\nThat to-do dont exist.");
                 return false;

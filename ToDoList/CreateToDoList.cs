@@ -30,7 +30,7 @@ namespace ToDoList
             {
                 return;
             }
-            if (String.IsNullOrEmpty(listName))
+            if (String.IsNullOrWhiteSpace(listName))
             {
                 Console.WriteLine("You have to put a name on your list.");
                 return;
@@ -329,15 +329,13 @@ namespace ToDoList
 
                 }
 
-
-
             }
 
         }
 
         public static void AddListToCompleteInAWeek()
         {
-            var json = CreateToDoListFile.GetJson();
+          var json = CreateToDoListFile.GetJson();
             Console.WriteLine("\n\n\n\nWHAT LIST TO ADD TO BE COMPLETED WITHIN A WEEK? PRESS 'Q' TO QUIT.\n\n");
 
             for (int i = 0; i < json.Count; i++)
