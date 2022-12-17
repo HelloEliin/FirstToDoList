@@ -228,7 +228,7 @@ namespace ToDoList
 
             Console.WriteLine("\n\n\nENTER NEW TO-DO NAME OR PRESS 'Q' TO QUIT.");
             string newTaskName = Console.ReadLine().ToLower();
-            if (String.IsNullOrEmpty(newTaskName))
+            if (String.IsNullOrWhiteSpace(newTaskName))
             {
                 Console.WriteLine("You have to enter a new name.");
                 return;

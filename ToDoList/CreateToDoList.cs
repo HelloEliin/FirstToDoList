@@ -203,7 +203,9 @@ namespace ToDoList
             var json = CreateToDoListFile.GetJson();
 
             Validation.IsThereAnyLists();
-            json.Reverse();
+  
+            json = json.OrderByDescending(x => x.Date).ToList();
+        
 
             Console.WriteLine("\n\n\n" + json[0].ListTitle);
 
